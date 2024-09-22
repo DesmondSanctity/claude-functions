@@ -1,0 +1,28 @@
+{
+  "name": "claude-functions",
+  "version": "1.0.0",
+  "description": "Learn how to build and integrate AI agents into your application using the function calling feature.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "claude",
+    "ai",
+    "function-calling",
+    "agents",
+    "twilio"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.27.3",
+    "body-parser": "^1.20.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "nodemon": "^3.1.7",
+    "twilio": "^5.3.1"
+  }
+}
