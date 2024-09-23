@@ -19,10 +19,9 @@ app.post('/itinerary', async (req, res) => {
 
  try {
   const itinerary = await handleUserRequest(incomingMsg);
-  console.log('Generated Itinerary:', itinerary);
 
   // Send the itinerary via WhatsApp
-  // await messageService.sendWhatsAppMessage(from, itinerary);
+  await messageService.sendWhatsAppMessage(from, itinerary);
 
   res
    .status(200)

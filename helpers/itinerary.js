@@ -34,8 +34,6 @@ async function generateItinerary(
   },
  ];
 
- console.log('Conversation:', conversation);
-
  const response = await anthropic.messages.create({
   model: 'claude-3-5-sonnet-20240620',
   max_tokens: 1024,
@@ -45,7 +43,6 @@ async function generateItinerary(
  });
 
  const toolCalls = response.content[1].input;
- console.log('Tool Calls:', toolCalls);
  const flights = await get_flights(
   toolCalls.origin,
   toolCalls.destination,
@@ -53,21 +50,19 @@ async function generateItinerary(
   toolCalls.returnDate
  );
 
- console.log('Flights:', flights);
-
  const finalResponse = await anthropic.messages.create({
   model: 'claude-3-opus-20240229',
   max_tokens: 1000,
   messages: [
    {
     role: 'user',
-    content: `Compile a flight list for ${currentLocation} to ${destinationLocation} from ${departureDate} to ${returnDate}.`,
+    content: `Compile a flight list for ${currentLocation} to ${destinationLocation} from ${departureDate} to ${returnDate}. The first 10 results should be displayed.`,
    },
    { role: 'assistant', content: response.content[0].text },
    {
     role: 'user',
     content: `Here are the flight results: ${JSON.stringify(
-     flights
+     flights.slice(0, 5)
     )}. Please format this information in a user-friendly way.`,
    },
   ],

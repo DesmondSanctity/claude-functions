@@ -9,10 +9,10 @@ const anthropic = new Anthropic({
 async function handleUserRequest(message) {
  const extractionPrompt = `
     Extract the following information from the user's message. If any information is missing, respond with "MISSING" for that field:
-    1. Current location
-    2. Destination location
-    3. Departure date
-    4. Return date
+    1. Current location IATA code
+    2. Destination location IATA code
+    3. Departure date (YYYY-MM-DD)
+    4. Return date (YYYY-MM-DD)
 
     User message: "${message}"
 
@@ -40,8 +40,6 @@ async function handleUserRequest(message) {
   acc[key.toLowerCase()] = value;
   return acc;
  }, {});
-
- console.log('Extracted Info:', extractedInfo);
 
  if (
   extractedInfo['current location'] === 'MISSING' ||
