@@ -1,18 +1,20 @@
 const { Anthropic } = require('@anthropic-ai/sdk');
-const { generateItinerary } = require('./itinerary');
+const { generateItinerary } = require('../lib/itinerary');
 require('dotenv').config();
 
 const anthropic = new Anthropic({
  apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
+const currentYear = new Date().getFullYear();
+
 async function handleUserRequest(message) {
  const extractionPrompt = `
-    Extract the following information from the user's message. If any information is missing, respond with "MISSING" for that field:
+    Extract the following information from the user's message. The current year is ${currentYear}, if dates are proided without a year, use the current year above. You can also extrapolate from the current year eg: next year will be the year after current year. If any information is missing, respond with "MISSING" for that field:
     1. Current location IATA code
     2. Destination location IATA code
-    3. Departure date (YYYY-MM-DD)
-    4. Return date (YYYY-MM-DD)
+    3. Departure date in (YYYY-MM-DD).
+    4. Return date in (YYYY-MM-DD).
 
     User message: "${message}"
 
@@ -24,7 +26,7 @@ async function handleUserRequest(message) {
   `;
 
  const extractionResponse = await anthropic.messages.create({
-  model: 'claude-3-5-sonnet-20240620',
+  model: 'claude-3-haiku-20240307',
   max_tokens: 1024,
   temperature: 0.5,
   messages: [{ role: 'user', content: extractionPrompt }],

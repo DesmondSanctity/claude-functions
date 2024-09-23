@@ -18,6 +18,13 @@ app.post('/itinerary', async (req, res) => {
  const from = req.body.From;
 
  try {
+  // Send immediate acknowledgment
+  await messageService.sendWhatsAppMessage(
+   from,
+   "We're generating your itinerary. This may take a few moments."
+  );
+
+  // Generate the itinerary
   const itinerary = await handleUserRequest(incomingMsg);
 
   // Send the itinerary via WhatsApp
