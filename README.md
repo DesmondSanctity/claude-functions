@@ -1,2 +1,3 @@
 # claude-functions
-Learn how to build and integrate AI agents into your application using the function calling feature.
+Use the function calling feature to learn how to build and integrate AI as agents into your application.
+
